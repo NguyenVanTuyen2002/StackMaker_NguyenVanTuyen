@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class SwipeController : MonoBehaviour
 {
     [SerializeField] private float speed = 50f;
 
     private Vector3 startPos;
-    private Vector3 direction;
+    [SerializeField] private Vector3 direction;
     private Vector3 endPos;
     private bool directionChosen;
+    [SerializeField] private Vector3 moveDirection;
+    [SerializeField] private Transform root;
 
     public LayerMask layer;
     public float raycastDistance = 1f;
 
     public GameObject DashParent;
+    public GameObject PlayerSkin;
     public GameObject PreDash;
     public static SwipeController instance;
 
@@ -29,6 +33,7 @@ public class SwipeController : MonoBehaviour
     void Update()
     {
         Moving();
+        MoveDirection();
     }
 
     private void Moving()
@@ -56,41 +61,42 @@ public class SwipeController : MonoBehaviour
         if (direction.y > 0 && angle < 45)
         {
             Debug.Log("Swipe Up");
-            MoveDirection(Vector3.forward);
+            moveDirection = Vector3.forward;
         }
         else if (direction.x > 0 && angle1 < 45)
         {
             Debug.Log("Swipe Right");
-            MoveDirection(Vector3.right);
+            moveDirection = Vector3.right;
         }
         else if (direction.x < 0 && angle1 > 135)
         {
             Debug.Log("Swipe Left ");
-            MoveDirection(Vector3.left);
+            moveDirection = Vector3.left;
         }
         else if (direction.y < 0 && (angle > 135))
         {
             Debug.Log("Swipe Down");
-            MoveDirection(Vector3.back);
+            moveDirection = Vector3.back;
         }
 
         directionChosen = true;
     }
-    
 
-    private void MoveDirection(Vector3 direction)
+
+    private void MoveDirection()
     {
         RaycastHit hit;
-        Ray ray = new Ray(transform.position, direction);
-        if (Physics.Raycast(ray, out hit, raycastDistance, layer))
+        Vector3 temp = new(direction.x, transform.position.y + 0.5f, direction.z);
+        Debug.DrawLine(transform.position, temp);
+        Ray ray = new Ray(root.transform.position, moveDirection);
+        Debug.DrawRay(transform.position, moveDirection, Color.red, 0.5f);
+        if (Physics.Raycast(ray, out hit, 0.5f, layer))
         {
-            transform.Translate(Vector3.zero);
-            Debug.Log("aaa");
+            moveDirection = Vector3.zero;
         }
         else
         {
-            transform.Translate(direction * speed * Time.deltaTime);
-            transform.Translate(Vector3.up * 0.03f);
+            transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
         }
     }
 
@@ -101,9 +107,10 @@ public class SwipeController : MonoBehaviour
         pos.y -= 0.2f;
         dash.transform.localPosition = pos;
         Vector3 Charcchterpos = transform.localPosition;
-        Charcchterpos.y += 0.2f;
-        transform.localPosition = Charcchterpos;
+        Charcchterpos.y += 0.3f;
+       transform.localPosition = Charcchterpos;
         PreDash = dash;
         PreDash.GetComponent<BoxCollider>().isTrigger = false;
     }
+
 }
