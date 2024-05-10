@@ -10,7 +10,7 @@ public class Stack : MonoBehaviour
         {
             other.gameObject.tag = "normal";
             SwipeController.instance.PickDash(other.gameObject);
-            other.gameObject.AddComponent<Rigidbody>();
+            //other.gameObject.AddComponent<Rigidbody>();
             other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.gameObject.AddComponent<Stack>();

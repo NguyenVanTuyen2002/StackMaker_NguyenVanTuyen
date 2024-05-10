@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class SwipeController : MonoBehaviour
 {
     [SerializeField] private float speed = 50f;
-    [SerializeField]private Rigidbody rb;
 
     private Vector3 startPos;
     private Vector3 direction;
@@ -85,13 +84,13 @@ public class SwipeController : MonoBehaviour
         Ray ray = new Ray(transform.position, direction);
         if (Physics.Raycast(ray, out hit, raycastDistance, layer))
         {
-            rb.velocity = Vector3.zero;
+            transform.Translate(Vector3.zero);
+            Debug.Log("aaa");
         }
         else
         {
-            rb.velocity = direction.normalized * speed;
-            transform.Translate(direction.normalized * Time.deltaTime * speed);
-            transform.Translate(Vector3.up * 0.3f);
+            transform.Translate(direction * speed * Time.deltaTime);
+            transform.Translate(Vector3.up * 0.03f);
         }
     }
 
