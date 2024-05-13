@@ -7,13 +7,15 @@ using UnityEngine.EventSystems;
 public class SwipeController : MonoBehaviour
 {
     [SerializeField] private float speed = 50f;
-
-    private Vector3 startPos;
-    [SerializeField] private Vector3 direction;
-    private Vector3 endPos;
-    private bool directionChosen;
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private Transform root;
+    [SerializeField] private Vector3 direction;
+
+    private Vector3 startPos;
+    private Vector3 endPos;
+    private Vector3 pos;
+    private Vector3 Charcchterpos;
+    private bool directionChosen;
 
     public LayerMask layer;
     public float raycastDistance = 1f;
@@ -87,7 +89,6 @@ public class SwipeController : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 temp = new(direction.x, transform.position.y + 0.5f, direction.z);
-        Debug.DrawLine(transform.position, temp);
         Ray ray = new Ray(root.transform.position, moveDirection);
         Debug.DrawRay(transform.position, moveDirection, Color.red, 0.5f);
         if (Physics.Raycast(ray, out hit, 0.5f, layer))
@@ -102,15 +103,60 @@ public class SwipeController : MonoBehaviour
 
     public void PickDash(GameObject dash)
     {
+        // vi tri cua dash se theo vi tri cua DashParent vi la con cua DashParent
         dash.transform.SetParent(DashParent.transform);
-        Vector3 pos = PreDash.transform.localPosition;
-        pos.y -= 0.2f;
+        // vi tri PreDash gan cho pos sau moi lan PickDash thi giam 0.3
+        pos = PreDash.transform.localPosition;
+        pos.y -= 0.3f;
+        // vi tri cua dash moi la vi tri cua pos
         dash.transform.localPosition = pos;
-        Vector3 Charcchterpos = transform.localPosition;
+
+        Charcchterpos = transform.localPosition;
         Charcchterpos.y += 0.3f;
-       transform.localPosition = Charcchterpos;
+        transform.localPosition = Charcchterpos;
         PreDash = dash;
         PreDash.GetComponent<BoxCollider>().isTrigger = false;
     }
 
+    public void DropDash(GameObject dash)
+    {
+        /*// ??t dash tr? l?i cha g?c
+        dash.transform.SetParent(null);
+
+        // Gi?m v? trí c?a Charcchterpos.y ?i 0.3
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+
+        // ??t l?i dash v? v? trí ban ??u c?a PreDash
+        if (PreDash != null)
+        {
+            dash.transform.localPosition = PreDash.transform.localPosition;
+
+            // N?u có BoxCollider, ??t l?i là isTrigger = true
+            BoxCollider boxCollider = PreDash.GetComponent<BoxCollider>();
+            if (boxCollider != null)
+            {
+                boxCollider.isTrigger = true;
+            }
+        }*/
+
+
+
+        /*
+        dash.transform.SetParent(DashParent.transform);
+        pos = PreDash.transform.localPosition;
+        pos.y += 0.3f;
+        dash.transform.localPosition = pos;
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+        PreDash = dash;
+        PreDash.GetComponent<BoxCollider>().isTrigger = false;*/
+        Debug.Log("aaa");
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+
+    }
 }
