@@ -11,6 +11,7 @@ public class SwipeController : MonoBehaviour
     private Vector3 startPos;
     [SerializeField] private Vector3 direction;
     private Vector3 endPos;
+    private Vector3 Charcchterpos;
     private bool directionChosen;
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private Transform root;
@@ -104,7 +105,7 @@ public class SwipeController : MonoBehaviour
     {
         dash.transform.SetParent(DashParent.transform);
         Vector3 pos = PreDash.transform.localPosition;
-        pos.y -= 0.2f;
+        pos.y -= 0.3f;
         dash.transform.localPosition = pos;
         Vector3 Charcchterpos = transform.localPosition;
         Charcchterpos.y += 0.3f;
@@ -113,4 +114,45 @@ public class SwipeController : MonoBehaviour
         PreDash.GetComponent<BoxCollider>().isTrigger = false;
     }
 
+    public void DropDash(GameObject dash)
+    {
+        /*// ??t dash tr? l?i cha g?c
+        dash.transform.SetParent(null);
+
+        // Gi?m v? trí c?a Charcchterpos.y ?i 0.3
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+
+        // ??t l?i dash v? v? trí ban ??u c?a PreDash
+        if (PreDash != null)
+        {
+            dash.transform.localPosition = PreDash.transform.localPosition;
+
+            // N?u có BoxCollider, ??t l?i là isTrigger = true
+            BoxCollider boxCollider = PreDash.GetComponent<BoxCollider>();
+            if (boxCollider != null)
+            {
+                boxCollider.isTrigger = true;
+            }
+        }*/
+
+
+
+        /*
+        dash.transform.SetParent(DashParent.transform);
+        pos = PreDash.transform.localPosition;
+        pos.y += 0.3f;
+        dash.transform.localPosition = pos;
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+        PreDash = dash;
+        PreDash.GetComponent<BoxCollider>().isTrigger = false;*/
+        //Debug.Log("aaa");
+        Charcchterpos = transform.localPosition;
+        Charcchterpos.y -= 0.3f;
+        transform.localPosition = Charcchterpos;
+
+    }
 }
