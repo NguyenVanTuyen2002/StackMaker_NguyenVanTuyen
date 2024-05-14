@@ -7,22 +7,25 @@ using UnityEngine.EventSystems;
 public class SwipeController : MonoBehaviour
 {
     [SerializeField] private float speed = 50f;
-
-    private Vector3 startPos;
-    [SerializeField] private Vector3 direction;
-    private Vector3 endPos;
-    private Vector3 Charcchterpos;
-    private bool directionChosen;
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private Transform root;
+    [SerializeField] private Vector3 direction;
+
+    private Vector3 startPos;
+    private Vector3 endPos;
+    private Vector3 Charcchterpos;
+    private Vector3 pos;
+    private bool directionChosen;
+    public int m_score;
 
     public LayerMask layer;
     public float raycastDistance = 1f;
-
+    public static SwipeController instance;
     public GameObject DashParent;
     public GameObject PlayerSkin;
     public GameObject PreDash;
-    public static SwipeController instance;
+
+    UIManager m_UI;
 
     private void Awake()
     {
@@ -31,6 +34,12 @@ public class SwipeController : MonoBehaviour
             instance = this;
         }
     }
+
+    private void Start()
+    {
+        m_UI = FindObjectOfType<UIManager>(); 
+    }
+
     void Update()
     {
         Moving();
@@ -88,10 +97,10 @@ public class SwipeController : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 temp = new(direction.x, transform.position.y + 0.5f, direction.z);
-        Debug.DrawLine(transform.position, temp);
+        //Debug.DrawLine(transform.position, temp);
         Ray ray = new Ray(root.transform.position, moveDirection);
         Debug.DrawRay(transform.position, moveDirection, Color.red, 0.5f);
-        if (Physics.Raycast(ray, out hit, 0.5f, layer))
+        if (Physics.Raycast(ray, out hit, raycastDistance, layer))
         {
             moveDirection = Vector3.zero;
         }
@@ -104,55 +113,37 @@ public class SwipeController : MonoBehaviour
     public void PickDash(GameObject dash)
     {
         dash.transform.SetParent(DashParent.transform);
-        Vector3 pos = PreDash.transform.localPosition;
+        pos = PreDash.transform.localPosition;
         pos.y -= 0.3f;
         dash.transform.localPosition = pos;
-        Vector3 Charcchterpos = transform.localPosition;
+        Charcchterpos = transform.localPosition;
         Charcchterpos.y += 0.3f;
-       transform.localPosition = Charcchterpos;
+        InCrementScore();
+        transform.localPosition = Charcchterpos;
         PreDash = dash;
         PreDash.GetComponent<BoxCollider>().isTrigger = false;
     }
 
     public void DropDash(GameObject dash)
     {
-        /*// ??t dash tr? l?i cha g?c
-        dash.transform.SetParent(null);
-
-        // Gi?m v? trí c?a Charcchterpos.y ?i 0.3
         Charcchterpos = transform.localPosition;
         Charcchterpos.y -= 0.3f;
         transform.localPosition = Charcchterpos;
+    }
 
-        // ??t l?i dash v? v? trí ban ??u c?a PreDash
-        if (PreDash != null)
-        {
-            dash.transform.localPosition = PreDash.transform.localPosition;
+    public void SetScore(int value)
+    {
+        m_score = value;
+    }
 
-            // N?u có BoxCollider, ??t l?i là isTrigger = true
-            BoxCollider boxCollider = PreDash.GetComponent<BoxCollider>();
-            if (boxCollider != null)
-            {
-                boxCollider.isTrigger = true;
-            }
-        }*/
+    public int GetScore()
+    {
+        return m_score;
+    }
 
-
-
-        /*
-        dash.transform.SetParent(DashParent.transform);
-        pos = PreDash.transform.localPosition;
-        pos.y += 0.3f;
-        dash.transform.localPosition = pos;
-        Charcchterpos = transform.localPosition;
-        Charcchterpos.y -= 0.3f;
-        transform.localPosition = Charcchterpos;
-        PreDash = dash;
-        PreDash.GetComponent<BoxCollider>().isTrigger = false;*/
-        //Debug.Log("aaa");
-        Charcchterpos = transform.localPosition;
-        Charcchterpos.y -= 0.3f;
-        transform.localPosition = Charcchterpos;
-
+    public void InCrementScore()
+    {
+        m_score++;
+        m_UI.SetScoreText("Score: " + m_score);
     }
 }

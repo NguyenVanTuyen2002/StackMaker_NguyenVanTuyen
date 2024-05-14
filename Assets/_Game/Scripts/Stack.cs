@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class Stack : MonoBehaviour
 {
+    //public UIManager uiManager;
+
+    /*private void Awake()
+    {
+        uiManager = GetComponent<UIManager>();  
+    */
+
+    private void Start()
+    {
+        
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "DashPickup")
@@ -13,19 +25,22 @@ public class Stack : MonoBehaviour
             //other.gameObject.AddComponent<Rigidbody>();
             //other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            other.gameObject.AddComponent<Stack>();
+            //other.gameObject.AddComponent<Stack>();
             //Destroy(this);
+        }
+        else if (other.tag == "Finish")
+        {
+            Debug.Log("aaa");
+            UIManager.Ins.TurnOnPrize();
         }
         else if (other.tag == "DropBrickDown")
         {
             other.gameObject.tag = "normal";
-
             other.gameObject.GetComponent<MeshRenderer>().enabled = true;
             SwipeController.instance.DropDash(other.gameObject);
             //other.gameObject.GetComponent<Rigidbody>().useGravity = false;
             //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            other.gameObject.AddComponent<Stack>();
-            
+            //other.gameObject.AddComponent<Stack>();
             //Destroy(this);
         }
     }
