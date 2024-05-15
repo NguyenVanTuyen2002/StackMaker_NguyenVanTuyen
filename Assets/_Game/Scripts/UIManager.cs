@@ -8,7 +8,6 @@ public class UIManager : MonoBehaviour
 {
     public TMP_Text scoreText;
     public GameObject menuUI;
-    //public GameObject _UIinGame;
     public GameObject _UIendGame;
 
     private static UIManager ins;

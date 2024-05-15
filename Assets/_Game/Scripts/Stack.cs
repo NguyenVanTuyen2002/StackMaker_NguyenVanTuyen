@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Stack : MonoBehaviour
 {
-    //public UIManager uiManager;
-
-    /*private void Awake()
-    {
-        uiManager = GetComponent<UIManager>();  
-    */
-
     private void Start()
     {
         
