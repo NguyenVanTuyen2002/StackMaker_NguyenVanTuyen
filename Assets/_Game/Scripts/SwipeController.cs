@@ -1,8 +1,9 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class SwipeController : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class SwipeController : MonoBehaviour
 
     UIManager m_UI;
 
+    private Vector3 initialPosition; // Biến để lưu vị trí ban đầu
+
     private void Awake()
     {
         if (instance == null)
@@ -37,7 +40,8 @@ public class SwipeController : MonoBehaviour
 
     private void Start()
     {
-        m_UI = FindObjectOfType<UIManager>(); 
+        m_UI = FindObjectOfType<UIManager>();
+        initialPosition = transform.position; // Lưu vị trí ban đầu
     }
 
     void Update()
@@ -61,7 +65,7 @@ public class SwipeController : MonoBehaviour
             ConvertMoving();
         }
     }
-    
+
     private void ConvertMoving()
     {
         float angle = Vector2.Angle(direction, Vector2.up);
