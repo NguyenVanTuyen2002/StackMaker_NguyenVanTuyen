@@ -11,7 +11,9 @@ public class SwipeController : MonoBehaviour
     [SerializeField] private Vector3 moveDirection;
     [SerializeField] private Transform root;
     [SerializeField] private Vector3 direction;
+    [SerializeField] Animator anim;
 
+    private string currentAnimName;
     private Vector3 startPos;
     private Vector3 endPos;
     private Vector3 Charcchterpos;
@@ -21,7 +23,6 @@ public class SwipeController : MonoBehaviour
 
     public LayerMask layer;
     public float raycastDistance = 1f;
-    public static SwipeController instance;
     public GameObject DashParent;
     public GameObject PlayerSkin;
     public GameObject PreDash;
@@ -30,13 +31,14 @@ public class SwipeController : MonoBehaviour
 
     private Vector3 initialPosition; // Biến để lưu vị trí ban đầu
 
+    private static SwipeController ins;
+    public static SwipeController Ins => ins;
+
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        ins = this;
     }
+
 
     private void Start()
     {
@@ -48,6 +50,21 @@ public class SwipeController : MonoBehaviour
     {
         Moving();
         MoveDirection();
+    }
+
+    public void ChangeAnim(string animName)
+    {
+        if (currentAnimName != animName)
+        {
+            anim.ResetTrigger(animName);
+            currentAnimName = animName;
+            anim.SetTrigger(currentAnimName);
+        }
+        else
+        {
+            anim.ResetTrigger(currentAnimName);
+            anim.SetTrigger(currentAnimName);
+        }
     }
 
     private void Moving()

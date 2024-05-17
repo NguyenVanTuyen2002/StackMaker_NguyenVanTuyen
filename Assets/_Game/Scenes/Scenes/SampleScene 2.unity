@@ -1065,6 +1065,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 199892526560899917, guid: c84b41a4245d5c241bc7ff57b0cca3f4, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2580899147284204563, guid: c84b41a4245d5c241bc7ff57b0cca3f4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1129,7 +1133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &261982480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3284,6 +3288,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317270433}
   m_CullTransparentMesh: 1
+--- !u!95 &1347708305 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95809777293889810, guid: c84b41a4245d5c241bc7ff57b0cca3f4, type: 3}
+  m_PrefabInstance: {fileID: 257980978}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1415106374
 GameObject:
   m_ObjectHideFlags: 0
@@ -4048,6 +4057,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   root: {fileID: 173409397}
   direction: {x: 0, y: 0, z: 0}
+  anim: {fileID: 1347708305}
   m_score: 0
   layer:
     serializedVersion: 2
